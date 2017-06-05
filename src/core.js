@@ -8,6 +8,7 @@ const getWinners = (vote) => {
   if (redVotes === blueVotes) return [red, blue]
   return (redVotes > blueVotes) ? red : blue
 }
+exports.zeroState = Map()
 exports.setEntries = (state, entries) => state.set('entries', List(entries))
 exports.next = (state) => {
   const entries = state.get('entries').concat(getWinners(state.get('vote')))
