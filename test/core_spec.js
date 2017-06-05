@@ -33,23 +33,77 @@ describe('core logic', () => {
         entries: List.of('c'),
       }))
     })
+    it('returns the winning entry back to the entries list', () => {
+      const state = fromJS(
+        {
+          vote: { pair: ['a', 'b'], tally: { a: 2, b: 5 } },
+          entries: ['c', 'd'],
+        },
+      )
+      const newState = next(state)
+      expect(newState).to.equal(fromJS(
+        {
+          vote: { pair: ['c', 'd'] },
+          entries: ['b'],
+        },
+      ))
+    })
+    it('in case of a tie, returns both entries to the list', () => {
+      const state = fromJS(
+        {
+          vote: { pair: ['a', 'b'], tally: { a: 5, b: 5 } },
+          entries: ['c', 'd'],
+        },
+      )
+      const newState = next(state)
+      expect(newState).to.equal(fromJS(
+        {
+          vote: { pair: ['c', 'd'] },
+          entries: ['a', 'b'],
+        },
+      ))
+    })
+    it('declares the last standing entry winner', () => {
+      const state = fromJS(
+        {
+          vote: { pair: ['a', 'b'], tally: { a: 1 } },
+          entries: [],
+        },
+      )
+      const newState = next(state)
+      expect(newState).to.equal(fromJS({ winner: 'a' }))
+    })
   })
   describe('vote', () => {
     it('creates a tally if there isnt one and starts it at 1', () => {
-      const state = fromJS({
-        vote: { pair: ['a', 'b'] },
-        entries: {},
-      })
-      const newState = vote(state, 'b')
+      const state = fromJS(
+        {
+          vote: { pair: ['a', 'b'] },
+          entries: [],
+        },
+      )
+      const newState = vote(state, 'a')
       expect(newState).to.equal(fromJS(
         {
           vote: { pair: ['a', 'b'], tally: { a: 1 } },
-          entries: {},
+          entries: [],
         },
     ))
     })
     it('it increments an existing tally', () => {
-      // bla bla
+      const state = fromJS(
+        {
+          vote: { pair: ['a', 'b'], tally: { b: 1 } },
+          entries: [],
+        },
+      )
+      const newState = vote(state, 'b')
+      expect(newState).to.equal(fromJS(
+        {
+          vote: { pair: ['a', 'b'], tally: { b: 2 } },
+          entries: [],
+        },
+      ))
     })
   })
 })
