@@ -31,6 +31,7 @@
   },
   "dependencies": {
     "eslint-plugin-filenames": "^1.2.0",
-    "immutable": "^3.8.1"
+    "immutable": "^3.8.1",
+    "redux": "^3.6.0"
   }
 }

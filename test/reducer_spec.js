@@ -18,18 +18,12 @@ describe('reducing...', () => {
       expect(newState).to.equal(fromJS({ entries: ['a', 'b', 'c'] }))
     })
     it('handles VOTE', () => {
-      const state = fromJS(
-        {
-          vote: { pair: ['a', 'b'] },
-          entries: [],
-        },
-      )
+      const state = fromJS({ vote: { pair: ['a', 'b'] } })
       const action = { type: 'VOTE', entry: 'a' }
       const newState = reducer(state, action)
       expect(newState).to.equal(fromJS(
         {
           vote: { pair: ['a', 'b'], tally: { a: 1 } },
-          entries: [],
         },
       ))
     })
@@ -43,6 +37,19 @@ describe('reducing...', () => {
       const action = { type: 'NEXT' }
       const newState = reducer(state, action)
       expect(newState).to.equal(fromJS({ winner: 'a' }))
+    })
+    // --- wow ---
+    it('can be used with reduce', () => {
+      const actions = [
+        { type: 'SET_ENTRIES', entries: ['a', 'b'] },
+        { type: 'NEXT' },
+        { type: 'VOTE', entry: 'a' },
+        { type: 'VOTE', entry: 'a' },
+        { type: 'VOTE', entry: 'b' },
+        { type: 'NEXT' },
+      ]
+      const finalState = actions.reduce(reducer, fromJS({}))
+      expect(finalState).to.equal(fromJS({ winner: 'a' }))
     })
   })
 })

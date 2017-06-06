@@ -21,8 +21,8 @@ exports.next = (state) => {
     })
   }
 }
-exports.vote = (state, entry) => state.updateIn(
-    ['vote', 'tally', entry],        // path
+exports.vote = (stateVote, entry) => stateVote.updateIn(
+    ['tally', entry],                // path
     0,                               // default
     i => i + 1,                      // function
   )

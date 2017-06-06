@@ -76,34 +76,14 @@ describe('core logic', () => {
   })
   describe('vote', () => {
     it('creates a tally if there isnt one and starts it at 1', () => {
-      const state = fromJS(
-        {
-          vote: { pair: ['a', 'b'] },
-          entries: [],
-        },
-      )
+      const state = fromJS({ pair: ['a', 'b'] })
       const newState = vote(state, 'a')
-      expect(newState).to.equal(fromJS(
-        {
-          vote: { pair: ['a', 'b'], tally: { a: 1 } },
-          entries: [],
-        },
-    ))
+      expect(newState).to.equal(fromJS({ pair: ['a', 'b'], tally: { a: 1 } }))
     })
     it('it increments an existing tally', () => {
-      const state = fromJS(
-        {
-          vote: { pair: ['a', 'b'], tally: { b: 1 } },
-          entries: [],
-        },
-      )
+      const state = fromJS({ pair: ['a', 'b'], tally: { a: 1, b: 3 } })
       const newState = vote(state, 'b')
-      expect(newState).to.equal(fromJS(
-        {
-          vote: { pair: ['a', 'b'], tally: { b: 2 } },
-          entries: [],
-        },
-      ))
+      expect(newState).to.equal(fromJS({ pair: ['a', 'b'], tally: { a: 1, b: 4 } }))
     })
   })
 })
