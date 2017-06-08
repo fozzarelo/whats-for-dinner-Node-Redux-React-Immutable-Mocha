@@ -1,6 +1,7 @@
+import { createStore } from 'redux'
 import { setEntries, next, vote, zeroState } from './core'
 
-export default function reducer(state = zeroState, action) {
+const reducer = (state = zeroState, action) => {
   switch (action.type) {
   case 'SET_ENTRIES': return setEntries(state, action.entries)
   case 'NEXT': return next(state)
@@ -8,3 +9,6 @@ export default function reducer(state = zeroState, action) {
   default: return state
   }
 }
+
+exports.reducer = reducer
+exports.makeStore = () => createStore(reducer)

@@ -2,7 +2,7 @@
 /* global it */
 import { expect } from 'chai'
 import { fromJS } from 'immutable'
-import reducer from '../src/reducer'
+import { reducer } from '../src/redux'
 
 describe('reducing...', () => {
   describe('core reducer', () => {

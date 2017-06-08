@@ -2,7 +2,7 @@
 /* global it */
 import { expect } from 'chai'
 import { fromJS } from 'immutable'
-import MakeStore from '../src/store'
+import { MakeStore } from '../src/redux'
 
 describe('The store', () => {
   it('is a Redux store with reducers', () => {
@@ -12,7 +12,7 @@ describe('The store', () => {
       type: 'SET_ENTRIES',
       entries: ['banana', 'kiwi', 'apple'],
     })
-    expect(store.getState()).toEqual(fromJS({
+    expect(store.getState()).to.equal(fromJS({
       entries: ['banana', 'kiwi', 'apple'],
     }))
   })
